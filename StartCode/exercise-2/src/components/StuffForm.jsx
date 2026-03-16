@@ -1,41 +1,34 @@
 import { useState } from "react";
 
-export default function StuffForm() {
+export default function StuffForm({onAddStuff}) {
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredPrice, setEnteredPrice] = useState("");
 
   // dont forget to add event prevent
-  
-  function handleName(e) {
-    setName(e.target.value);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    onAddStuff(enteredName, enteredPrice);
+
+    setEnteredName("");
+    setEnteredPrice("");
   }
 
-  function handlePrice(e) {
-    setPrice(e.target.value);
-  }
 
-  const ADDED_STUFF = [...INITIAL_STUFFS];
-  const [addedStuffs, setAddedStuffs] = React.useState(ADDED_STUFF);
-
-  function addStuff({ name, price }) {
-    addedStuffs.push((stuff, index) => (
-              <StuffCard key={index} name={name} price={price} />
-            ))
-    
-  }
 
   // use on submit
 
   return (
-    <form className="stuff-form">
+    <form className="stuff-form" onSubmit={handleSubmit}>
       <p>Stuff name</p>
-      <input type={handleName} placeholder="Banana" />
+      <input type="text" placeholder="Banana" value={enteredName} onChange={(e) => setEnteredName(e.target.value)} />
 
       <p>Stuff price</p>
-      <input type={handlePrice} placeholder="15" />
+      <input type="number" placeholder="15" value={enteredPrice} onChange={(e) => setEnteredPrice(e.target.value)} />
 
-      <button onSubmit={addStuff}>Add Stuff</button>
+      <button type="submit">Add Stuff</button>
     </form>
   );
 }

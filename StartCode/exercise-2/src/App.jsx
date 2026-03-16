@@ -1,7 +1,7 @@
 import React from "react";
 
-import StuffForm from "./components/StuffForm";
 import StuffCard from "./components/StuffCard";
+import StuffForm from "./components/StuffForm";
 
 const INITIAL_STUFFS = [
   {
@@ -18,12 +18,18 @@ const INITIAL_STUFFS = [
   },
 ];
 
-const ADDED_STUFF = [...INITIAL_STUFFS];
-ADDED_STUFF.push({name : {}, price: {}});
 
 export default function App() {
   const [stuffs, setStuffs] = React.useState(INITIAL_STUFFS);
-  const [addedStuffs, setAddedStuffs] = React.useState(ADDED_STUFF);
+
+  const handleAddStuff = (addedName, addedPrice) => {
+    const newStuff = {
+      name: addedName,
+      price: addedPrice,
+    };
+
+    setStuffs((prevStuffs) => [...prevStuffs, newStuff]);
+  }
 
   return (
     <>
@@ -31,13 +37,10 @@ export default function App() {
         <h1>My Stuff</h1>
       </header>
 
-      <StuffForm></StuffForm>
+      <StuffForm onAddStuff={handleAddStuff} />
 
       <div className="stuff-list">
         {stuffs.map((stuff, index) => (
-          <StuffCard key={index} name={stuff.name} price={stuff.price} />
-        ))}
-        {addedStuffs.push((stuff, index) => (
           <StuffCard key={index} name={stuff.name} price={stuff.price} />
         ))}
       </div>
