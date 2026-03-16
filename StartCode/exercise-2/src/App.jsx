@@ -18,8 +18,12 @@ const INITIAL_STUFFS = [
   },
 ];
 
+const ADDED_STUFF = [...INITIAL_STUFFS];
+ADDED_STUFF.push({name : {}, price: {}});
+
 export default function App() {
   const [stuffs, setStuffs] = React.useState(INITIAL_STUFFS);
+  const [addedStuffs, setAddedStuffs] = React.useState(ADDED_STUFF);
 
   return (
     <>
@@ -31,6 +35,9 @@ export default function App() {
 
       <div className="stuff-list">
         {stuffs.map((stuff, index) => (
+          <StuffCard key={index} name={stuff.name} price={stuff.price} />
+        ))}
+        {addedStuffs.push((stuff, index) => (
           <StuffCard key={index} name={stuff.name} price={stuff.price} />
         ))}
       </div>
